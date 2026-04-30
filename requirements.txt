@@ -1,0 +1,14 @@
+# Minimal deps to run the ECA experiments (CPU)
+# Install with: ./.venv/bin/python -m pip install -r requirements.txt
+
+torch
+transformers
+datasets
+scikit-learn
+numpy
+pandas
+tqdm
+protobuf
+sentencepiece
+tokenizers
+matplotlib

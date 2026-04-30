@@ -1,0 +1,81 @@
+{
+  "run": {
+    "dataset": "adult",
+    "model": "distilbert-base-uncased",
+    "seed": 0,
+    "train_size": 400,
+    "eval_size": 200,
+    "epochs": 1,
+    "batch_size": 8,
+    "lr": 5e-05,
+    "max_steps": 100,
+    "lambda_kl": 0.01,
+    "gamma_causal": 3.0,
+    "device": "cpu"
+  },
+  "experiments": [
+    {
+      "dataset": "adult",
+      "n_train": 400,
+      "n_eval": 200,
+      "model": "distilbert-base-uncased",
+      "softmax": {
+        "name": "softmax",
+        "accuracy": 0.755,
+        "ece": 0.03778958320617676,
+        "by_group": {
+          "female": {
+            "n": 69,
+            "accuracy": 0.8840579710144928,
+            "ece": 0.1644301414489746
+          },
+          "male": {
+            "n": 131,
+            "accuracy": 0.6870229007633588,
+            "ece": 0.02891409397125244
+          }
+        },
+        "counterfactual_diff_p1": 0.0001798996381694451
+      },
+      "causal_prompting": {
+        "name": "causal_prompting",
+        "accuracy": 0.755,
+        "ece": 0.1463101077079773,
+        "by_group": {
+          "female": {
+            "n": 69,
+            "accuracy": 0.8840579710144928,
+            "ece": 0.11678626571876416
+          },
+          "male": {
+            "n": 131,
+            "accuracy": 0.6870229007633588,
+            "ece": 0.16186085639109138
+          }
+        },
+        "counterfactual_diff_p1": 0.003396884771063924
+      },
+      "eca": {
+        "name": "eca",
+        "accuracy": 0.755,
+        "ece": 0.13527508229017257,
+        "by_group": {
+          "female": {
+            "n": 69,
+            "accuracy": 0.8840579710144928,
+            "ece": 0.121482461258985
+          },
+          "male": {
+            "n": 131,
+            "accuracy": 0.6870229007633588,
+            "ece": 0.14254000214220003
+          }
+        },
+        "counterfactual_diff_p1": 0.0015517370775341988,
+        "uncertainty_mean": 0.225204199552536,
+        "uncertainty_auc_error": 0.239356669820246,
+        "counterfactual_weighted_by_u": 0.00030150104430504143
+      }
+    }
+  ]
+}
