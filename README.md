@@ -1,15 +1,3 @@
-# DLCV Project — Evidential Causal Alignment (ECA)
-
-This workspace contains the proposal plus a **runnable** minimal experiment suite that implements the proposal’s required evaluations on **Adult** and **ToxiGen**.
-
-## Files
-
-- [Project_Proposal.pdf](Project_Proposal.pdf) — original 2‑page proposal.
-- [run_experiments.py](run_experiments.py) — trains baselines + ECA and computes metrics.
-- [requirements.txt](requirements.txt) — minimal Python dependencies.
-- [results_adult.json](results_adult.json) — latest Adult run output.
-- [results_toxigen.json](results_toxigen.json) — latest ToxiGen run output.
-
 # Evidential Causal Alignment (ECA) for Trustworthy Language Models
 
 ## Overview
@@ -22,6 +10,15 @@ This project implements **Evidential Causal Alignment (ECA)** — a framework th
 - **Uncertainty-guided training** to reduce biased predictions
 
 ---
+
+## Files
+
+- [Project_Proposal.pdf](Project_Proposal.pdf) — original 2‑page proposal.
+- [run_experiments.py](run_experiments.py) — trains baselines + ECA and computes metrics.
+- [requirements.txt](requirements.txt) — minimal Python dependencies.
+- [results_adult.json](results_adult.json) — latest Adult run output.
+- [results_toxigen.json](results_toxigen.json) — latest ToxiGen run output.
+
 
 ## Key Idea
 
