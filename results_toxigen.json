@@ -1,261 +1,453 @@
 {
   "run": {
     "dataset": "toxigen",
-    "model": "distilbert-base-uncased",
+    "model": "bert-base-uncased",
     "seed": 0,
-    "train_size": 400,
-    "eval_size": 200,
+    "train_size": 2000,
+    "eval_size": 1000,
     "epochs": 1,
     "batch_size": 8,
     "lr": 5e-05,
-    "max_steps": 100,
-    "lambda_kl": 0.01,
+    "max_steps": 200,
+    "lambda_kl": 0.02,
+    "kl_start_factor": 0.1,
     "gamma_causal": 3.0,
+    "overconf_penalty": 0.5,
+    "evidence_floor": 0.2,
+    "collapse_penalty": 0.2,
+    "correct_confidence_bonus": 0.15,
+    "correct_uncertainty_penalty": 0.2,
+    "evidence_temperature": 2.0,
+    "max_evidence": 30.0,
+    "balance_sampling": true,
+    "plot_dir": "plots",
     "device": "cpu"
   },
   "experiments": [
     {
       "dataset": "toxigen",
-      "n_train": 400,
-      "n_eval": 200,
-      "model": "distilbert-base-uncased",
+      "n_train": 2000,
+      "n_eval": 940,
+      "model": "bert-base-uncased",
       "softmax": {
         "name": "softmax",
-        "accuracy": 0.62,
-        "ece": 0.07053294315934182,
+        "accuracy": 0.6617021276595745,
+        "ece": 0.2248471474710931,
         "by_group": {
           "asian folks": {
-            "n": 8,
-            "accuracy": 0.75,
-            "ece": 0.2576136440038681
+            "n": 51,
+            "accuracy": 0.803921568627451,
+            "ece": 0.1159788703217226
           },
           "black folks / african-americans": {
-            "n": 5,
-            "accuracy": 0.8,
-            "ece": 0.32433619499206545
+            "n": 33,
+            "accuracy": 0.45454545454545453,
+            "ece": 0.47457439700762427
           },
           "black/african-american folks": {
-            "n": 14,
-            "accuracy": 0.6428571428571429,
-            "ece": 0.14751541188785008
+            "n": 59,
+            "accuracy": 0.8305084745762712,
+            "ece": 0.10507643424858482
           },
           "chinese folks": {
-            "n": 12,
-            "accuracy": 0.75,
-            "ece": 0.3054864058891932
+            "n": 77,
+            "accuracy": 0.6753246753246753,
+            "ece": 0.22507746420897448
           },
           "folks with mental disabilities": {
-            "n": 16,
-            "accuracy": 0.4375,
-            "ece": 0.22348863817751408
+            "n": 68,
+            "accuracy": 0.6911764705882353,
+            "ece": 0.25229541343801165
           },
           "folks with physical disabilities": {
-            "n": 19,
-            "accuracy": 0.7368421052631579,
-            "ece": 0.16781932742972125
+            "n": 95,
+            "accuracy": 0.5894736842105263,
+            "ece": 0.2810901171282718
           },
           "jewish folks": {
-            "n": 13,
-            "accuracy": 0.3076923076923077,
-            "ece": 0.4196123136923864
+            "n": 87,
+            "accuracy": 0.6206896551724138,
+            "ece": 0.2675507757170447
           },
           "latino/hispanic folks": {
-            "n": 24,
-            "accuracy": 0.5,
-            "ece": 0.16876499044398466
+            "n": 61,
+            "accuracy": 0.7377049180327869,
+            "ece": 0.19775330531792562
           },
           "lgbtq+ folks": {
-            "n": 14,
-            "accuracy": 0.6428571428571429,
-            "ece": 0.07447385362216404
+            "n": 66,
+            "accuracy": 0.6060606060606061,
+            "ece": 0.29619927975264465
           },
           "mexican folks": {
-            "n": 17,
-            "accuracy": 0.29411764705882354,
-            "ece": 0.31669532814446616
+            "n": 73,
+            "accuracy": 0.5342465753424658,
+            "ece": 0.3619173209961146
           },
           "middle eastern folks": {
-            "n": 13,
-            "accuracy": 0.5384615384615384,
-            "ece": 0.2803351466472332
+            "n": 68,
+            "accuracy": 0.6470588235294118,
+            "ece": 0.27321831991567336
           },
           "muslim folks": {
-            "n": 21,
-            "accuracy": 0.8095238095238095,
-            "ece": 0.15172051815759569
+            "n": 83,
+            "accuracy": 0.7228915662650602,
+            "ece": 0.2298735057015017
+          },
+          "native american folks": {
+            "n": 20,
+            "accuracy": 0.95,
+            "ece": 0.07913159728050231
           },
           "native american/indigenous folks": {
-            "n": 6,
-            "accuracy": 1.0,
-            "ece": 0.28279622395833326
+            "n": 34,
+            "accuracy": 0.7647058823529411,
+            "ece": 0.18639010541579304
           },
           "women": {
-            "n": 14,
-            "accuracy": 0.7857142857142857,
-            "ece": 0.20422141041074476
+            "n": 65,
+            "accuracy": 0.5384615384615384,
+            "ece": 0.33749601520024813
           }
         },
-        "counterfactual_diff_p1": 0.0007388623780570924
+        "counterfactual_diff_p1": 0.002196969697251916
+      },
+      "reweight_class": {
+        "name": "reweight_class",
+        "accuracy": 0.7180851063829787,
+        "ece": 0.1450943313697551,
+        "by_group": {
+          "asian folks": {
+            "n": 51,
+            "accuracy": 0.7647058823529411,
+            "ece": 0.10897084486250784
+          },
+          "black folks / african-americans": {
+            "n": 33,
+            "accuracy": 0.7575757575757576,
+            "ece": 0.126965986959862
+          },
+          "black/african-american folks": {
+            "n": 59,
+            "accuracy": 0.7966101694915254,
+            "ece": 0.12167108463028731
+          },
+          "chinese folks": {
+            "n": 77,
+            "accuracy": 0.6493506493506493,
+            "ece": 0.24533555569586815
+          },
+          "folks with mental disabilities": {
+            "n": 68,
+            "accuracy": 0.6764705882352942,
+            "ece": 0.1683678486767937
+          },
+          "folks with physical disabilities": {
+            "n": 95,
+            "accuracy": 0.6736842105263158,
+            "ece": 0.17010592441809805
+          },
+          "jewish folks": {
+            "n": 87,
+            "accuracy": 0.6436781609195402,
+            "ece": 0.21832908535825796
+          },
+          "latino/hispanic folks": {
+            "n": 61,
+            "accuracy": 0.5573770491803278,
+            "ece": 0.31604550461300085
+          },
+          "lgbtq+ folks": {
+            "n": 66,
+            "accuracy": 0.6363636363636364,
+            "ece": 0.24272715187433994
+          },
+          "mexican folks": {
+            "n": 73,
+            "accuracy": 0.6986301369863014,
+            "ece": 0.21921144650407035
+          },
+          "middle eastern folks": {
+            "n": 68,
+            "accuracy": 0.7941176470588235,
+            "ece": 0.15063406658523223
+          },
+          "muslim folks": {
+            "n": 83,
+            "accuracy": 0.7590361445783133,
+            "ece": 0.12520109242703542
+          },
+          "native american folks": {
+            "n": 20,
+            "accuracy": 0.9,
+            "ece": 0.10669114589691162
+          },
+          "native american/indigenous folks": {
+            "n": 34,
+            "accuracy": 0.9411764705882353,
+            "ece": 0.0559004825704238
+          },
+          "women": {
+            "n": 65,
+            "accuracy": 0.8307692307692308,
+            "ece": 0.08533596809093769
+          }
+        },
+        "counterfactual_diff_p1": 0.0011232246179133654
+      },
+      "reweight_group": {
+        "name": "reweight_group",
+        "accuracy": 0.752127659574468,
+        "ece": 0.07141890614590746,
+        "by_group": {
+          "asian folks": {
+            "n": 51,
+            "accuracy": 0.8235294117647058,
+            "ece": 0.08881795055725997
+          },
+          "black folks / african-americans": {
+            "n": 33,
+            "accuracy": 0.6363636363636364,
+            "ece": 0.17177238473386477
+          },
+          "black/african-american folks": {
+            "n": 59,
+            "accuracy": 0.8135593220338984,
+            "ece": 0.06648065781189223
+          },
+          "chinese folks": {
+            "n": 77,
+            "accuracy": 0.7402597402597403,
+            "ece": 0.11234238976007932
+          },
+          "folks with mental disabilities": {
+            "n": 68,
+            "accuracy": 0.7794117647058824,
+            "ece": 0.09428337742300595
+          },
+          "folks with physical disabilities": {
+            "n": 95,
+            "accuracy": 0.7473684210526316,
+            "ece": 0.08151941581776266
+          },
+          "jewish folks": {
+            "n": 87,
+            "accuracy": 0.7241379310344828,
+            "ece": 0.13564605959530535
+          },
+          "latino/hispanic folks": {
+            "n": 61,
+            "accuracy": 0.6557377049180327,
+            "ece": 0.1704981698364508
+          },
+          "lgbtq+ folks": {
+            "n": 66,
+            "accuracy": 0.6666666666666666,
+            "ece": 0.14044063064185056
+          },
+          "mexican folks": {
+            "n": 73,
+            "accuracy": 0.7123287671232876,
+            "ece": 0.22386159064018563
+          },
+          "middle eastern folks": {
+            "n": 68,
+            "accuracy": 0.7941176470588235,
+            "ece": 0.12549191625679243
+          },
+          "muslim folks": {
+            "n": 83,
+            "accuracy": 0.7590361445783133,
+            "ece": 0.08671377186315606
+          },
+          "native american folks": {
+            "n": 20,
+            "accuracy": 0.9,
+            "ece": 0.16768887639045718
+          },
+          "native american/indigenous folks": {
+            "n": 34,
+            "accuracy": 0.9117647058823529,
+            "ece": 0.11656300811206592
+          },
+          "women": {
+            "n": 65,
+            "accuracy": 0.7692307692307693,
+            "ece": 0.17430277375074535
+          }
+        },
+        "counterfactual_diff_p1": 0.0028076195158064365
       },
       "causal_prompting": {
         "name": "causal_prompting",
-        "accuracy": 0.56,
-        "ece": 0.19726433113217354,
+        "accuracy": 0.7042553191489361,
+        "ece": 0.09030529006998589,
         "by_group": {
           "asian folks": {
-            "n": 8,
-            "accuracy": 0.75,
-            "ece": 0.17604462057352066
+            "n": 51,
+            "accuracy": 0.7647058823529411,
+            "ece": 0.11130746965314828
           },
           "black folks / african-americans": {
-            "n": 5,
-            "accuracy": 0.6,
-            "ece": 0.1897476315498352
+            "n": 33,
+            "accuracy": 0.5454545454545454,
+            "ece": 0.2723739476818027
           },
           "black/african-american folks": {
-            "n": 14,
-            "accuracy": 0.7142857142857143,
-            "ece": 0.16534559215818134
+            "n": 59,
+            "accuracy": 0.8305084745762712,
+            "ece": 0.1030803297535848
           },
           "chinese folks": {
-            "n": 12,
-            "accuracy": 0.5833333333333334,
-            "ece": 0.3108870113889376
+            "n": 77,
+            "accuracy": 0.6753246753246753,
+            "ece": 0.1335283626209606
           },
           "folks with mental disabilities": {
-            "n": 16,
-            "accuracy": 0.6875,
-            "ece": 0.13137972727417946
+            "n": 68,
+            "accuracy": 0.6617647058823529,
+            "ece": 0.15831520496045842
           },
           "folks with physical disabilities": {
-            "n": 19,
-            "accuracy": 0.5789473684210527,
-            "ece": 0.25342939401927744
+            "n": 95,
+            "accuracy": 0.6842105263157895,
+            "ece": 0.08382996069757563
           },
           "jewish folks": {
-            "n": 13,
-            "accuracy": 0.46153846153846156,
-            "ece": 0.3175811286155994
+            "n": 87,
+            "accuracy": 0.6551724137931034,
+            "ece": 0.16960208785944972
           },
           "latino/hispanic folks": {
-            "n": 24,
-            "accuracy": 0.5416666666666666,
-            "ece": 0.2195529726644357
+            "n": 61,
+            "accuracy": 0.6885245901639344,
+            "ece": 0.18964717427238087
           },
           "lgbtq+ folks": {
-            "n": 14,
-            "accuracy": 0.5714285714285714,
-            "ece": 0.21243705068315777
+            "n": 66,
+            "accuracy": 0.7424242424242424,
+            "ece": 0.15541520534139688
           },
           "mexican folks": {
-            "n": 17,
-            "accuracy": 0.23529411764705882,
-            "ece": 0.504259829135502
+            "n": 73,
+            "accuracy": 0.589041095890411,
+            "ece": 0.23075078386966494
           },
           "middle eastern folks": {
-            "n": 13,
-            "accuracy": 0.5384615384615384,
-            "ece": 0.40135974150437576
+            "n": 68,
+            "accuracy": 0.7647058823529411,
+            "ece": 0.08708004741107717
           },
           "muslim folks": {
-            "n": 21,
-            "accuracy": 0.6666666666666666,
-            "ece": 0.23277886992409114
+            "n": 83,
+            "accuracy": 0.7469879518072289,
+            "ece": 0.08506289555365779
+          },
+          "native american folks": {
+            "n": 20,
+            "accuracy": 0.95,
+            "ece": 0.12330727577209473
           },
           "native american/indigenous folks": {
-            "n": 6,
-            "accuracy": 0.5,
-            "ece": 0.36936792731285095
+            "n": 34,
+            "accuracy": 0.7647058823529411,
+            "ece": 0.16266817117438598
           },
           "women": {
-            "n": 14,
-            "accuracy": 0.35714285714285715,
-            "ece": 0.39887986864362446
+            "n": 65,
+            "accuracy": 0.676923076923077,
+            "ece": 0.18792805396593537
           }
         },
-        "counterfactual_diff_p1": 0.000861125357914716
+        "counterfactual_diff_p1": 0.0022180555388331413
       },
       "eca": {
         "name": "eca",
-        "accuracy": 0.56,
-        "ece": 0.1759846594929695,
+        "accuracy": 0.7031914893617022,
+        "ece": 0.07696104398433198,
         "by_group": {
           "asian folks": {
-            "n": 8,
-            "accuracy": 0.75,
-            "ece": 0.18872109055519104
+            "n": 51,
+            "accuracy": 0.7843137254901961,
+            "ece": 0.13869552635679058
           },
           "black folks / african-americans": {
-            "n": 5,
-            "accuracy": 0.6,
-            "ece": 0.4182980537414551
+            "n": 33,
+            "accuracy": 0.696969696969697,
+            "ece": 0.11955840659864021
           },
           "black/african-american folks": {
-            "n": 14,
-            "accuracy": 0.7142857142857143,
-            "ece": 0.18959195699010575
+            "n": 59,
+            "accuracy": 0.6779661016949152,
+            "ece": 0.15380880337650493
           },
           "chinese folks": {
-            "n": 12,
-            "accuracy": 0.5833333333333334,
-            "ece": 0.1689313401778539
+            "n": 77,
+            "accuracy": 0.7272727272727273,
+            "ece": 0.13585999337109653
           },
           "folks with mental disabilities": {
-            "n": 16,
-            "accuracy": 0.6875,
-            "ece": 0.08278826996684074
+            "n": 68,
+            "accuracy": 0.75,
+            "ece": 0.11575617334421943
           },
           "folks with physical disabilities": {
-            "n": 19,
-            "accuracy": 0.5789473684210527,
-            "ece": 0.27850645937417684
+            "n": 95,
+            "accuracy": 0.6631578947368421,
+            "ece": 0.10008621278562044
           },
           "jewish folks": {
-            "n": 13,
-            "accuracy": 0.46153846153846156,
-            "ece": 0.29152777332525986
+            "n": 87,
+            "accuracy": 0.632183908045977,
+            "ece": 0.09537964339913994
           },
           "latino/hispanic folks": {
-            "n": 24,
-            "accuracy": 0.5416666666666666,
-            "ece": 0.21066239724556604
+            "n": 61,
+            "accuracy": 0.5573770491803278,
+            "ece": 0.2133788148887822
           },
           "lgbtq+ folks": {
-            "n": 14,
-            "accuracy": 0.5714285714285714,
-            "ece": 0.2201208472251892
+            "n": 66,
+            "accuracy": 0.6515151515151515,
+            "ece": 0.10782360804803442
           },
           "mexican folks": {
-            "n": 17,
-            "accuracy": 0.23529411764705882,
-            "ece": 0.5669836428235558
+            "n": 73,
+            "accuracy": 0.7397260273972602,
+            "ece": 0.11323735322037787
           },
           "middle eastern folks": {
-            "n": 13,
-            "accuracy": 0.5384615384615384,
-            "ece": 0.21152648100486168
+            "n": 68,
+            "accuracy": 0.7205882352941176,
+            "ece": 0.13810930532567642
           },
           "muslim folks": {
-            "n": 21,
-            "accuracy": 0.6666666666666666,
-            "ece": 0.2189397102310544
+            "n": 83,
+            "accuracy": 0.7831325301204819,
+            "ece": 0.1454604813851506
+          },
+          "native american folks": {
+            "n": 20,
+            "accuracy": 0.8,
+            "ece": 0.1555691421031952
           },
           "native american/indigenous folks": {
-            "n": 6,
-            "accuracy": 0.5,
-            "ece": 0.3632854421933492
+            "n": 34,
+            "accuracy": 0.8823529411764706,
+            "ece": 0.20892774006899667
           },
           "women": {
-            "n": 14,
-            "accuracy": 0.35714285714285715,
-            "ece": 0.39762418610709055
+            "n": 65,
+            "accuracy": 0.6461538461538462,
+            "ece": 0.09951667097898631
           }
         },
-        "counterfactual_diff_p1": 0.0005371799925342202,
-        "uncertainty_mean": 0.22299720346927643,
-        "uncertainty_auc_error": 0.3448660714285714,
-        "counterfactual_weighted_by_u": 0.0001127374343923293
-      }
+        "counterfactual_diff_p1": 0.002289102878421545,
+        "uncertainty_mean": 0.6537182331085205,
+        "uncertainty_auc_error": 0.6994181727479273,
+        "counterfactual_weighted_by_u": 0.0015142771881073713
+      },
+      "uncertainty_histogram": "plots/uncertainty_hist_toxigen_eca.png"
     }
   ]
 }
